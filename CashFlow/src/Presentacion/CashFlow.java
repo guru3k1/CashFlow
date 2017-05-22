@@ -5,17 +5,35 @@
  */
 package Presentacion;
 
+import Datos.Conexion;
+import javax.swing.UIManager;
+
 /**
  *
  * @author TheGuru
  */
 public class CashFlow {
 
-    /**
-     * @param args the command line arguments
-     */
+    
+    public static Conexion hc;
+    
     public static void main(String[] args) {
-        // TODO code application logic here
+        
+      try {
+		UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
+        try {
+             hc= new Conexion();
+             System.out.println("Conectado!");
+             IU_GestionCaja g = new IU_GestionCaja();
+             g.setVisible(true);
+             
+        } catch (Exception e) {
+            System.out.println("error al iniciar: "+e);
+            
+        }
     }
     
 }

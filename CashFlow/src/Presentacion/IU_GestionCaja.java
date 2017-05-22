@@ -4,18 +4,25 @@
  * and open the template in the editor.
  */
 package Presentacion;
+import Control.ControlDias;
+import Control.ConvertirMayusculas;
+import Control.Validar;
+import Datos.Conexion;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Locale;
+import javax.swing.JTextField;
 
-/**
- *
- * @author TheGuru
- */
 public class IU_GestionCaja extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Interfaz
-     */
+    Validar v = new Validar();
+    ControlDias dias = new ControlDias();
+
     public IU_GestionCaja() {
         initComponents();
+        metodosIniciales();
+        cargarCombos();
     }
 
     /**
@@ -29,30 +36,31 @@ public class IU_GestionCaja extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        jdateoperacion = new com.toedter.calendar.JDateChooser();
         jLabel3 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cbxcliente = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        jLabel2 = new javax.swing.JLabel();
+        cbxoperacion = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtdetalle = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        txtfechahoy = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        txtimporte = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
+        txtdiasrestantes = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
+        txtpromedio = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablemovimientos = new javax.swing.JTable();
         jLabel12 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnguardar = new javax.swing.JButton();
+        jLabel13 = new javax.swing.JLabel();
+        btnborrar = new javax.swing.JButton();
+        txttotalmes = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -61,81 +69,102 @@ public class IU_GestionCaja extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/canilla.jpg"))); // NOI18N
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 10, 290, 330));
-        jPanel1.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 90, -1, 30));
+        jPanel1.add(jdateoperacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(381, 90, 140, 30));
 
         jLabel3.setText("Operación");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 50, -1, -1));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, -1, -1));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel1.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 90, 140, 30));
+        cbxcliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jPanel1.add(cbxcliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 90, 140, 30));
 
         jLabel4.setText("Detalle");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, 50, 30));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 50, 30));
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel1.add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 40, 140, 30));
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/canilla.jpg"))); // NOI18N
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 0, 290, 330));
+
+        cbxoperacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxoperacionActionPerformed(evt);
+            }
+        });
+        jPanel1.add(cbxoperacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 40, 140, 30));
 
         jLabel5.setText("Cliente");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, -1, 30));
-        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 140, 140, 30));
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, -1, 30));
+        jPanel1.add(txtdetalle, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 140, 140, 30));
 
         jLabel6.setText("Importe");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 190, 50, 30));
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 50, 30));
 
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+        txtfechahoy.setBorder(null);
+        txtfechahoy.setFocusable(false);
+        txtfechahoy.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                txtfechahoyCaretUpdate(evt);
             }
         });
-        jPanel1.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 40, 80, 30));
+        txtfechahoy.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtfechahoyActionPerformed(evt);
+            }
+        });
+        jPanel1.add(txtfechahoy, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 40, 160, 30));
 
         jLabel7.setText("Fecha Operacion");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 90, 90, 30));
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 90, 120, 30));
 
         jLabel8.setText("Fecha");
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 40, 40, 30));
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 40, 40, 30));
 
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
+        txtimporte.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                txtimporteCaretUpdate(evt);
             }
         });
-        jPanel1.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 190, 140, 30));
-
-        jLabel9.setText("Dias Restantes");
-        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 140, 80, 30));
-
-        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+        txtimporte.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField4ActionPerformed(evt);
+                txtimporteActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 140, 80, 30));
+        txtimporte.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                txtimportePropertyChange(evt);
+            }
+        });
+        jPanel1.add(txtimporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 190, 140, 30));
+
+        jLabel9.setText("Dias Laborales Restantes");
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 140, 150, 30));
 
         jLabel10.setText("Ing/Mes");
-        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 190, 40, 30));
+        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 190, 60, 30));
 
-        jTextField5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField5ActionPerformed(evt);
+        txtdiasrestantes.setFocusable(false);
+        txtdiasrestantes.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                txtdiasrestantesCaretUpdate(evt);
             }
         });
-        jPanel1.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 190, 70, 30));
+        txtdiasrestantes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtdiasrestantesActionPerformed(evt);
+            }
+        });
+        jPanel1.add(txtdiasrestantes, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 140, 50, 30));
 
         jLabel11.setText("Promedio Dia");
-        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 190, 70, 30));
+        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 190, 80, 30));
 
-        jTextField6.addActionListener(new java.awt.event.ActionListener() {
+        txtpromedio.setFocusable(false);
+        txtpromedio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField6ActionPerformed(evt);
+                txtpromedioActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 190, 50, 30));
+        jPanel1.add(txtpromedio, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 190, 50, 30));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablemovimientos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -146,56 +175,96 @@ public class IU_GestionCaja extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        tablemovimientos.setFocusable(false);
+        jScrollPane1.setViewportView(tablemovimientos);
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 270, 500, 230));
 
+        jLabel12.setFont(new java.awt.Font("FrankRuehl", 0, 18)); // NOI18N
         jLabel12.setText("Ultimos Movimientos");
-        jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, -1, -1));
+        jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 240, -1, -1));
 
-        jButton1.setText("Guardar");
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 400, -1, -1));
+        btnguardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Guardar.png"))); // NOI18N
+        btnguardar.setText("Guardar");
+        jPanel1.add(btnguardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 380, -1, -1));
 
-        jButton2.setText("Borrar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jLabel13.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
+        jLabel13.setText("CASHFLOW   -   v1.0");
+        jLabel13.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 440, 130, 40));
+
+        btnborrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Eliminar.png"))); // NOI18N
+        btnborrar.setText("Borrar");
+        btnborrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnborrarActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 400, -1, -1));
+        jPanel1.add(btnborrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 380, -1, -1));
+
+        txttotalmes.setFocusable(false);
+        txttotalmes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txttotalmesActionPerformed(evt);
+            }
+        });
+        jPanel1.add(txttotalmes, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 190, 50, 30));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 810, 520));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void txtimporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtimporteActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_txtimporteActionPerformed
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+    private void txtdiasrestantesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtdiasrestantesActionPerformed
+
+    }//GEN-LAST:event_txtdiasrestantesActionPerformed
+
+    private void txtpromedioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtpromedioActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+    }//GEN-LAST:event_txtpromedioActionPerformed
 
-    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+    private void btnborrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnborrarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField4ActionPerformed
+    }//GEN-LAST:event_btnborrarActionPerformed
 
-    private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
+    private void txtfechahoyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtfechahoyActionPerformed
+
+    }//GEN-LAST:event_txtfechahoyActionPerformed
+
+    private void cbxoperacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxoperacionActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField5ActionPerformed
+    }//GEN-LAST:event_cbxoperacionActionPerformed
 
-    private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
+    private void txtimportePropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_txtimportePropertyChange
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField6ActionPerformed
+    }//GEN-LAST:event_txtimportePropertyChange
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void txtimporteCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtimporteCaretUpdate
+
+        txtimporte.setHorizontalAlignment(JTextField.RIGHT);// TODO add your handling code here:
+    }//GEN-LAST:event_txtimporteCaretUpdate
+
+    private void txttotalmesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txttotalmesActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_txttotalmesActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+    private void txtdiasrestantesCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtdiasrestantesCaretUpdate
+
+    }//GEN-LAST:event_txtdiasrestantesCaretUpdate
+
+    private void txtfechahoyCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtfechahoyCaretUpdate
+
+    }//GEN-LAST:event_txtfechahoyCaretUpdate
+
+    public void cargarCombos() {
+        Conexion con = CashFlow.hc;
+
+    }
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -230,15 +299,15 @@ public class IU_GestionCaja extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
+    private javax.swing.JButton btnborrar;
+    private javax.swing.JButton btnguardar;
+    private javax.swing.JComboBox<String> cbxcliente;
+    private javax.swing.JComboBox<String> cbxoperacion;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -249,12 +318,32 @@ public class IU_GestionCaja extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
+    private com.toedter.calendar.JDateChooser jdateoperacion;
+    private javax.swing.JTable tablemovimientos;
+    private javax.swing.JTextField txtdetalle;
+    private javax.swing.JTextField txtdiasrestantes;
+    private javax.swing.JTextField txtfechahoy;
+    private javax.swing.JTextField txtimporte;
+    private javax.swing.JTextField txtpromedio;
+    private javax.swing.JTextField txttotalmes;
     // End of variables declaration//GEN-END:variables
+
+    private void metodosIniciales() {
+        v.validarSoloLetras(txtdetalle);
+        v.validarSoloNumeros(txtimporte);
+        txtdetalle.setDocument(new ConvertirMayusculas());
+        txtdiasrestantes.setEditable(false);
+        txttotalmes.setEditable(false);
+        txtpromedio.setEditable(false);
+        txtdiasrestantes.setText("45");
+        txtfechahoy.setHorizontalAlignment(JTextField.RIGHT);
+        txtpromedio.setHorizontalAlignment(JTextField.RIGHT);
+        txttotalmes.setHorizontalAlignment(JTextField.RIGHT);
+        txtdiasrestantes.setHorizontalAlignment(JTextField.RIGHT);
+        txtfechahoy.setText(dias.mostrarFecha());
+        txtdiasrestantes.setText(dias.diasRestantes());
+        txtpromedio.setText(dias.Promedio());
+        txttotalmes.setText(dias.TotaldelMes());
+    }
+    
 }
