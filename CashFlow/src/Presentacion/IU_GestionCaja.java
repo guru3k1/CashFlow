@@ -13,11 +13,13 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
 public class IU_GestionCaja extends javax.swing.JFrame {
 
     Validar v = new Validar();
     ControlDias dias = new ControlDias();
+    DefaultTableModel modelo_tabla;
 
     public IU_GestionCaja() {
         initComponents();
@@ -55,12 +57,14 @@ public class IU_GestionCaja extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         txtpromedio = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tablemovimientos = new javax.swing.JTable();
+        tblmovimientos = new javax.swing.JTable();
         jLabel12 = new javax.swing.JLabel();
         btnguardar = new javax.swing.JButton();
         jLabel13 = new javax.swing.JLabel();
         btnborrar = new javax.swing.JButton();
         txttotalmes = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -69,16 +73,15 @@ public class IU_GestionCaja extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel1.add(jdateoperacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(381, 90, 140, 30));
+        jPanel1.add(jdateoperacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 70, 120, 30));
 
         jLabel3.setText("Operación");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, -1, -1));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, -1, -1));
 
-        cbxcliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel1.add(cbxcliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 90, 140, 30));
+        jPanel1.add(cbxcliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 170, 150, 30));
 
-        jLabel4.setText("Detalle");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 50, 30));
+        jLabel4.setText("Descripción");
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, 60, 30));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/canilla.jpg"))); // NOI18N
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 0, 290, 330));
@@ -88,14 +91,14 @@ public class IU_GestionCaja extends javax.swing.JFrame {
                 cbxoperacionActionPerformed(evt);
             }
         });
-        jPanel1.add(cbxoperacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 40, 140, 30));
+        jPanel1.add(cbxoperacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 120, 150, 30));
 
         jLabel5.setText("Cliente");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, -1, 30));
-        jPanel1.add(txtdetalle, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 140, 140, 30));
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, -1, 30));
+        jPanel1.add(txtdetalle, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 220, 150, 30));
 
         jLabel6.setText("Importe");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 50, 30));
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 270, 50, 30));
 
         txtfechahoy.setBorder(null);
         txtfechahoy.setFocusable(false);
@@ -109,13 +112,13 @@ public class IU_GestionCaja extends javax.swing.JFrame {
                 txtfechahoyActionPerformed(evt);
             }
         });
-        jPanel1.add(txtfechahoy, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 40, 160, 30));
+        jPanel1.add(txtfechahoy, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 70, 160, 30));
 
-        jLabel7.setText("Fecha Operacion");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 90, 120, 30));
+        jLabel7.setText("Fecha Operación");
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, 110, 30));
 
         jLabel8.setText("Fecha");
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 40, 40, 30));
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 70, 40, 30));
 
         txtimporte.addCaretListener(new javax.swing.event.CaretListener() {
             public void caretUpdate(javax.swing.event.CaretEvent evt) {
@@ -132,13 +135,13 @@ public class IU_GestionCaja extends javax.swing.JFrame {
                 txtimportePropertyChange(evt);
             }
         });
-        jPanel1.add(txtimporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 190, 140, 30));
+        jPanel1.add(txtimporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 270, 150, 30));
 
         jLabel9.setText("Dias Laborales Restantes");
-        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 140, 150, 30));
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 120, 150, 30));
 
-        jLabel10.setText("Ing/Mes");
-        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 190, 60, 30));
+        jLabel10.setText("Ingresos registrados / Mes");
+        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 170, 170, 30));
 
         txtdiasrestantes.setFocusable(false);
         txtdiasrestantes.addCaretListener(new javax.swing.event.CaretListener() {
@@ -151,10 +154,10 @@ public class IU_GestionCaja extends javax.swing.JFrame {
                 txtdiasrestantesActionPerformed(evt);
             }
         });
-        jPanel1.add(txtdiasrestantes, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 140, 50, 30));
+        jPanel1.add(txtdiasrestantes, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 120, 50, 30));
 
         jLabel11.setText("Promedio Dia");
-        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 190, 80, 30));
+        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 220, 80, 30));
 
         txtpromedio.setFocusable(false);
         txtpromedio.addActionListener(new java.awt.event.ActionListener() {
@@ -162,9 +165,9 @@ public class IU_GestionCaja extends javax.swing.JFrame {
                 txtpromedioActionPerformed(evt);
             }
         });
-        jPanel1.add(txtpromedio, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 190, 50, 30));
+        jPanel1.add(txtpromedio, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 220, 50, 30));
 
-        tablemovimientos.setModel(new javax.swing.table.DefaultTableModel(
+        tblmovimientos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -175,32 +178,34 @@ public class IU_GestionCaja extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        tablemovimientos.setFocusable(false);
-        jScrollPane1.setViewportView(tablemovimientos);
+        tblmovimientos.setFocusable(false);
+        jScrollPane1.setViewportView(tblmovimientos);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 270, 500, 230));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 360, 500, 230));
 
         jLabel12.setFont(new java.awt.Font("FrankRuehl", 0, 18)); // NOI18N
         jLabel12.setText("Ultimos Movimientos");
-        jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 240, -1, -1));
+        jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 320, -1, -1));
 
         btnguardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Guardar.png"))); // NOI18N
         btnguardar.setText("Guardar");
-        jPanel1.add(btnguardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 380, -1, -1));
+        jPanel1.add(btnguardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 390, 100, 40));
 
         jLabel13.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
         jLabel13.setText("CASHFLOW   -   v1.0");
         jLabel13.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 440, 130, 40));
+        jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 130, 40));
 
         btnborrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Eliminar.png"))); // NOI18N
-        btnborrar.setText("Borrar");
+        btnborrar.setText("Borrar ");
+        btnborrar.setMaximumSize(new java.awt.Dimension(95, 29));
+        btnborrar.setMinimumSize(new java.awt.Dimension(95, 29));
         btnborrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnborrarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnborrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 380, -1, -1));
+        jPanel1.add(btnborrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 460, 100, 40));
 
         txttotalmes.setFocusable(false);
         txttotalmes.addActionListener(new java.awt.event.ActionListener() {
@@ -208,9 +213,20 @@ public class IU_GestionCaja extends javax.swing.JFrame {
                 txttotalmesActionPerformed(evt);
             }
         });
-        jPanel1.add(txttotalmes, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 190, 50, 30));
+        jPanel1.add(txttotalmes, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 170, 50, 30));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 810, 520));
+        jButton1.setText("Configurar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 530, 100, 40));
+
+        jButton2.setText("Estadisticas");
+        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 270, -1, 30));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 810, 600));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -260,6 +276,10 @@ public class IU_GestionCaja extends javax.swing.JFrame {
 
     }//GEN-LAST:event_txtfechahoyCaretUpdate
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     public void cargarCombos() {
         Conexion con = CashFlow.hc;
 
@@ -303,6 +323,8 @@ public class IU_GestionCaja extends javax.swing.JFrame {
     private javax.swing.JButton btnguardar;
     private javax.swing.JComboBox<String> cbxcliente;
     private javax.swing.JComboBox<String> cbxoperacion;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -319,7 +341,7 @@ public class IU_GestionCaja extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private com.toedter.calendar.JDateChooser jdateoperacion;
-    private javax.swing.JTable tablemovimientos;
+    private javax.swing.JTable tblmovimientos;
     private javax.swing.JTextField txtdetalle;
     private javax.swing.JTextField txtdiasrestantes;
     private javax.swing.JTextField txtfechahoy;
@@ -342,8 +364,37 @@ public class IU_GestionCaja extends javax.swing.JFrame {
         txtdiasrestantes.setHorizontalAlignment(JTextField.RIGHT);
         txtfechahoy.setText(dias.mostrarFecha());
         txtdiasrestantes.setText(dias.diasRestantes());
-        txtpromedio.setText(dias.Promedio());
-        txttotalmes.setText(dias.TotaldelMes());
+        txtpromedio.setText(dias.Promedio(10000));
+        txttotalmes.setText(Integer.toString(10000));
+        txtdiasrestantes.setToolTipText("Dias laborales restantes incluyendo sabados");
+        txtpromedio.setToolTipText("Promedio de ingresos del mes por dia");
+        txttotalmes.setToolTipText("Suma total registrada de ingresos en el mes");
+        txtimporte.setToolTipText("Importe de la operación");
+        txtdetalle.setToolTipText("Descipción de la operación");
+        tblmovimientos.setToolTipText("Ultimos registros de operaciones");
+        manejoTabla();
     }
     
+    public void manejoTabla(){
+        modelo_tabla = new DefaultTableModel() {
+            public boolean isCellEditable(int fila, int columna) {
+                return false;
+            }
+        };
+        tblmovimientos.setModel(modelo_tabla);
+        modelo_tabla.addColumn("id");
+        modelo_tabla.addColumn("Fecha");
+        modelo_tabla.addColumn("Cliente");
+        modelo_tabla.addColumn("Descipción");
+        modelo_tabla.addColumn("Importe");
+        //bll.mostrarLista(modelo_tabla, tbldatos);
+        tblmovimientos.getTableHeader().setReorderingAllowed(false);
+        tblmovimientos.getColumnModel().getColumn(0).setMaxWidth(0);
+        tblmovimientos.getColumnModel().getColumn(0).setMinWidth(0);
+        tblmovimientos.getColumnModel().getColumn(0).setPreferredWidth(0);
+        tblmovimientos.getColumnModel().getColumn(1).setMaxWidth(130);
+        tblmovimientos.getColumnModel().getColumn(2).setMaxWidth(300);
+        tblmovimientos.getColumnModel().getColumn(3).setMaxWidth(500);
+        tblmovimientos.getColumnModel().getColumn(4).setMaxWidth(130);
+    }
 }
