@@ -81,11 +81,12 @@ public class IU_GestionCaja extends javax.swing.JFrame {
         jPanel1.add(cbxcliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 170, 150, 30));
 
         jLabel4.setText("Descripción");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, 60, 30));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, 80, 30));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagen/canilla.jpg"))); // NOI18N
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 0, 290, 330));
 
+        cbxoperacion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ingreso", "Egreso" }));
         cbxoperacion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbxoperacionActionPerformed(evt);
